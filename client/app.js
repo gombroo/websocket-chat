@@ -5,7 +5,8 @@ const messagesSection = document.getElementById('messages-section');
 const messagesList = document.getElementById('messages-list');
 const addMessageForm = document.getElementById('add-messages-form');
 const userNameInput = document.getElementById('username');
-const messageContentInput = document.getElementById('messages-content');
+const messageContentInput = document.getElementById('message-content');
+const messages = [];
 
 // login form
 
@@ -19,7 +20,7 @@ const loginHandler = event => {
     messagesSection.classList.toggle('show');
  }
 } 
- 
+
 loginForm.addEventListener('submit', loginHandler);
 
 // message form
@@ -34,18 +35,19 @@ const addMessage = (author, content) => {
     message.innerHTML = `
     <h3 class="message__author">${ userName === author ? 'You': author }</h3>
     <div class="message__content">${content}</div>`;
-    messages.appendChild(message);
+    messagesList.appendChild(message);
   }
 }
 
 const sendMessage = event => {
   event.preventDefault();
+  const value = messageContentInput.value;
 
-  if(messageContentInput !== null && messageContentInput !== '') {
+  if(value == null || value == '') {
     alert('Fields can\'t be empty!');
   } else {
-    addMessage(userName);
-    messageContentInput.reset();
+    addMessage(userName, value);
+    messageContentInput.value = '';
   }
 }
 

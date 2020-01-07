@@ -16,7 +16,6 @@ socket.emit('message', { author: 'John Doe', conent: 'Lorem Ipsum' });
 
 
 // login form
-
 const loginHandler = event => {
   event.preventDefault();
   
@@ -27,12 +26,10 @@ const loginHandler = event => {
     messagesSection.classList.toggle('show');
  }
 } 
-
 loginForm.addEventListener('submit', loginHandler);
 
 
 // message form
-
 const addMessage = (author, content) => {
   const message = document.createElement('li');
   message.classList.add('message');
@@ -50,14 +47,13 @@ const addMessage = (author, content) => {
 const sendMessage = event => {
   event.preventDefault();
   let messageContent = messageContentInput.value;
-
-  if(messageContent == null || value == '') {
-    alert('Fields can\'t be empty!');
-  } else {
-    addMessage(userName, messageContent);  
-    socket.emit('message', { author: userName, content: messageContent });
+  if(!messageContent.length) {
+    alert('You have to type something!');
+  }
+  else {
+    addMessage(userName, messageContent);
+    socket.emit('message', { author: userName, content: messageContent })
     messageContentInput.value = '';
   }
 }
-
 addMessageForm.addEventListener('submit', sendMessage);

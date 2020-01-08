@@ -24,6 +24,13 @@ const io = socket(server); // socket.io integration with server, make server rea
 io.on('connection', (socket) => {
   console.log('New client! Its id – ' + socket.id);
 
+  socket.on('join', (user) => {
+    console.log('New user ' + socket.id + ' added!'); // ???
+    users.push(user); // ???
+    socket.broadcast.emit('user', user); // ??
+    console.log('Oh,' +  user + 'has joined the conversation!');
+  });
+
   // socket.on('message', () => { console.log('Oh, I\'ve got something from ' + socket.id) }); 
   socket.on('message', (message) => {
     console.log('Oh, I\'ve got something from ' + socket.id);
@@ -34,8 +41,5 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => { console.log('Oh, socket ' + socket.id + ' has left') });
   console.log('I\'ve added a listener on message and disconnect events \n');
 
-  socket.on('join', (user) => {
-    console.log('New user' + socket.id + 'added!');
-    users.push(user);
-  });
+
 });

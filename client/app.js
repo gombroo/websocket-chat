@@ -6,30 +6,33 @@ const messagesList = document.getElementById('messages-list');
 const addMessageForm = document.getElementById('add-messages-form');
 const userNameInput = document.getElementById('username');
 const messageContentInput = document.getElementById('message-content');
-const messages = [];
-const socket = io();
+const socket = io(); // init new client/socket and save it in 'socket' const
 
-// socket listener & emitter
+// socket listeners
 // socket.on('message', event => addMessage(event.author, event.content));
-socket.on('message',({ author, content }) => addMessage(author, conent));
-socket.emit('message', { author: 'John Doe', conent: 'Lorem Ipsum' });
+socket.on('message',({ author, content }) => addMessage(author, content));
+socket.on('join' ); /// ???
+
+// socket emitters
+socket.emit('message', { author: 'John Doe', content: 'Lorem Ipsum' });
 
 
-// login form
 const loginHandler = event => {
-  event.preventDefault();
-  
+  event.preventDefault();  
   if(userNameInput !== null && userNameInput !== '') {
     alert('Fields can\'t be empty!');
  } else {
     userName = userNameInput;
+    
+    const user = socket.id; 
+    socket.emit('join', { author: userName, id: user }) // ???
+
     messagesSection.classList.toggle('show');
  }
 } 
 loginForm.addEventListener('submit', loginHandler);
 
 
-// message form
 const addMessage = (author, content) => {
   const message = document.createElement('li');
   message.classList.add('message');
@@ -52,8 +55,10 @@ const sendMessage = event => {
   }
   else {
     addMessage(userName, messageContent);
+    // emit message after clicking 'send'
     socket.emit('message', { author: userName, content: messageContent })
     messageContentInput.value = '';
   }
 }
 addMessageForm.addEventListener('submit', sendMessage);
+

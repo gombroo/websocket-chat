@@ -24,7 +24,7 @@ socket.on('leave', (user) => {
 });
 
 // socket emitters
-socket.emit('message', { author: 'John Doe', content: 'Lorem Ipsum' });
+socket.emit('message', { author: 'Chat Bot', content: 'New user has joined the conversation!' });
 
 
 const loginHandler = event => {
